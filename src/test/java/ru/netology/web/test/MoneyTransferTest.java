@@ -5,6 +5,7 @@ import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.LoginPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoneyTransferTest {
 
@@ -15,11 +16,19 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verifyInfo = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verifyInfo);
-
+        var startFirstCardBalance = dashboardPage.getCardBalance(0);
+        var startSecondCardBalance = dashboardPage.getCardBalance(1);
+        var transferPage = dashboardPage.validTransferTo(0);
         var cardInfo = DataHelper.getSecondCardInfo();
-        dashboardPage.transferToFirstCard(cardInfo);
-        System.out.println("Balance first card: " + dashboardPage.getCardBalance(0));
-        System.out.println("Balance second card: " + dashboardPage.getCardBalance(1));
+        var amount = transferPage.transferToFirstCard(cardInfo);
+
+        var expectedFirstCardBalance = startFirstCardBalance + amount;
+        var expectedSecondCardBalance = startSecondCardBalance - amount;
+        var actualFirstCardBalance = dashboardPage.getCardBalance(0);
+        var actualSecondCardBalance = dashboardPage.getCardBalance(1);
+
+        assertEquals(expectedFirstCardBalance, actualFirstCardBalance);
+        assertEquals(expectedSecondCardBalance, actualSecondCardBalance);
     }
 
     @Test
@@ -29,10 +38,18 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verifyInfo = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verifyInfo);
-
+        var startFirstCardBalance = dashboardPage.getCardBalance(0);
+        var startSecondCardBalance = dashboardPage.getCardBalance(1);
+        var transferPage = dashboardPage.validTransferTo(1);
         var cardInfo = DataHelper.getFirstCardInfo();
-        dashboardPage.transferToSecondCard(cardInfo);
-        System.out.println("Balance first card: " + dashboardPage.getCardBalance(0));
-        System.out.println("Balance second card: " + dashboardPage.getCardBalance(1));
+        var amount = transferPage.transferToSecondCard(cardInfo);
+
+        var expectedFirstCardBalance = startFirstCardBalance - amount;
+        var expectedSecondCardBalance = startSecondCardBalance + amount;
+        var actualFirstCardBalance = dashboardPage.getCardBalance(0);
+        var actualSecondCardBalance = dashboardPage.getCardBalance(1);
+
+        assertEquals(expectedFirstCardBalance, actualFirstCardBalance);
+        assertEquals(expectedSecondCardBalance, actualSecondCardBalance);
     }
 }
