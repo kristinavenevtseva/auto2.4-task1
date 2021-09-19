@@ -18,15 +18,7 @@ public class TransferPage {
     private SelenideElement fromField = $("[data-test-id=from] input");
     private SelenideElement actionButton = $("[data-test-id=action-transfer]");
 
-    public int transferToFirstCard(DataHelper.CardInfo cardInfo) {
-        amountField.setValue(DataHelper.getRandomAmount());
-        var amountValue = getAmount();
-        fromField.setValue(cardInfo.getNumber());
-        actionButton.click();
-        return amountValue;
-    }
-
-    public int transferToSecondCard(DataHelper.CardInfo cardInfo) {
+    public int transferToCard(DataHelper.CardInfo cardInfo) {
         amountField.setValue(DataHelper.getRandomAmount());
         var amountValue = getAmount();
         fromField.setValue(cardInfo.getNumber());

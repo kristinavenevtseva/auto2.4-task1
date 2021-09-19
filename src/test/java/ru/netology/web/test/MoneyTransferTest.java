@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MoneyTransferTest {
 
     @Test
-    void shouldSuccessfulTranserFromSecondToFirst() {
+    void shouldSuccessfulTransferFromSecondToFirst() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -20,7 +20,7 @@ public class MoneyTransferTest {
         var startSecondCardBalance = dashboardPage.getCardBalance(1);
         var transferPage = dashboardPage.validTransferTo(0);
         var cardInfo = DataHelper.getSecondCardInfo();
-        var amount = transferPage.transferToFirstCard(cardInfo);
+        var amount = transferPage.transferToCard(cardInfo);
 
         var expectedFirstCardBalance = startFirstCardBalance + amount;
         var expectedSecondCardBalance = startSecondCardBalance - amount;
@@ -32,7 +32,7 @@ public class MoneyTransferTest {
     }
 
     @Test
-    void shouldSuccessfulTranserFromFirstToSecond() {
+    void shouldSuccessfulTransferFromFirstToSecond() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -42,7 +42,7 @@ public class MoneyTransferTest {
         var startSecondCardBalance = dashboardPage.getCardBalance(1);
         var transferPage = dashboardPage.validTransferTo(1);
         var cardInfo = DataHelper.getFirstCardInfo();
-        var amount = transferPage.transferToSecondCard(cardInfo);
+        var amount = transferPage.transferToCard(cardInfo);
 
         var expectedFirstCardBalance = startFirstCardBalance - amount;
         var expectedSecondCardBalance = startSecondCardBalance + amount;
