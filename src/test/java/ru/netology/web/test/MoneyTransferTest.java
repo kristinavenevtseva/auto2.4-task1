@@ -20,7 +20,8 @@ public class MoneyTransferTest {
         var startSecondCardBalance = dashboardPage.getCardBalance(1);
         var transferPage = dashboardPage.validTransferTo(0);
         var cardInfo = DataHelper.getSecondCardInfo();
-        var amount = transferPage.transferToCard(cardInfo);
+        var amount = DataHelper.getRandomAmount(startSecondCardBalance);
+        transferPage.transferToCard(cardInfo, amount);
 
         var expectedFirstCardBalance = startFirstCardBalance + amount;
         var expectedSecondCardBalance = startSecondCardBalance - amount;
@@ -42,7 +43,8 @@ public class MoneyTransferTest {
         var startSecondCardBalance = dashboardPage.getCardBalance(1);
         var transferPage = dashboardPage.validTransferTo(1);
         var cardInfo = DataHelper.getFirstCardInfo();
-        var amount = transferPage.transferToCard(cardInfo);
+        var amount = DataHelper.getRandomAmount(startFirstCardBalance);
+        transferPage.transferToCard(cardInfo, amount);
 
         var expectedFirstCardBalance = startFirstCardBalance - amount;
         var expectedSecondCardBalance = startSecondCardBalance + amount;

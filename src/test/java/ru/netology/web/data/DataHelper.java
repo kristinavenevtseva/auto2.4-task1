@@ -44,8 +44,8 @@ public class DataHelper {
         return new CardInfo("5559 0000 0000 0002", "10 000 RUB");
     }
 
-    public static String getRandomAmount() {
-        var amount = faker.number().digits(5);
-        return amount;
+    public static int getRandomAmount(int startCardBalance) {
+        var amount = 0+(Math.random()*startCardBalance);
+        return (int) amount;
     }
 }
